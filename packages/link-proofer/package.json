@@ -19,7 +19,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "esbuild": "0.15.13"
+    "esbuild": "0.15.13",
+    "node-fetch": "^3.3.0"
   },
   "devDependencies": {
     "microbundle": "^0.15.1",

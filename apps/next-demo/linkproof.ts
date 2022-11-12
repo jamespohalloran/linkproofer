@@ -1,4 +1,4 @@
-const foo = {
-  abc: 123,
+const linkproof = {
+  NEXTJS_HOME: "https://nextjs.org",
 };
-export default foo;
+export default linkproof;

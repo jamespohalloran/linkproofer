@@ -1,8 +1,9 @@
 const fs = require("fs");
+import fetch from "node-fetch";
 import { build } from "esbuild";
 import path from "path";
 
-export const getLinkProofFile = async () => {
+const getLinkProofFile = async () => {
   const linkproofFilename = "linkproof";
 
   let hasTs = false;
@@ -32,4 +33,34 @@ export const getLinkProofFile = async () => {
     "dist",
     `${linkproofFilename}.out.js`
   )).default;
+
+  return linkProofFile;
 };
+
+export const checkFiles = async () => {
+  const linkproofFile = await getLinkProofFile();
+  await checkLinkProofFile(linkproofFile);
+};
+
+const checkLinkProofFile = async (linkProofFile: any) => {
+  const verbose = true;
+  console.log("linkProofFile", linkProofFile);
+
+  Object.keys(linkProofFile).forEach(async (key) => {
+    const isValidUrl = await checkUrl(linkProofFile[key]);
+    if (verbose) {
+      console.log(
+        `Checking: ${linkProofFile[key]} - ${isValidUrl ? "OK" : "FAIL"}`
+      );
+    }
+  });
+};
+
+async function checkUrl(url: string) {
+  try {
+    const response = await fetch(url);
+    return response.status === 200;
+  } catch (e) {
+    return false;
+  }
+}
