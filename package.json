@@ -5,10 +5,12 @@
   "description": "Tool to check for broken links in a project",
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
-    "build": "cd packages/link-proofer && npm run build"
+    "build": "cd packages/link-proofer && yarn build",
+    "dev": "cd packages/link-proofer && yarn dev"
   },
   "keywords": [],
   "author": "",
