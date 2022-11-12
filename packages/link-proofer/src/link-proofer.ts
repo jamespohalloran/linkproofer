@@ -10,15 +10,18 @@ interface LinkList {
   value: string;
 }
 
-const getLinkProofFile = async (): Promise<LinkList[]> => {
+const getLinkProofFile = async (
+  filePattern: string | string[]
+): Promise<LinkList[]> => {
   const linkproofFilename = "linkproof";
   const outputDir = "dist";
 
   //glob for all files ending in .linkproof.ts or linkproof.js outside of dist
-  const entries = await fg([
-    `**/*.${linkproofFilename}.{ts,js}`,
-    `!**/${outputDir}/**`,
-  ]);
+  const entries = await fg(
+    filePattern
+      ? filePattern
+      : [`**/*.${linkproofFilename}.{ts,js}`, `!**/${outputDir}/**`]
+  );
 
   // if (fs.existsSync(path.join(process.cwd(), `${linkproofFilename}.ts`))) {
   //   hasTs = true;
@@ -62,8 +65,8 @@ const getLinkProofFile = async (): Promise<LinkList[]> => {
   return result;
 };
 
-export const checkFiles = async () => {
-  const linkproofFile = await getLinkProofFile();
+export const checkFiles = async (filePattern: string | string[]) => {
+  const linkproofFile = await getLinkProofFile(filePattern);
   await checkLinkProofFile(linkproofFile);
 };
 
@@ -97,7 +100,10 @@ const checkLinkProofFile = async (linkProofFile: LinkList[]) => {
     //TODO - throw error and kill process upstream
     process.exit(0);
   }
-  console.log("All links passed!");
+
+  if (linkProofFile.length > 0) console.log("All links passed!");
+  else
+    console.log("No links found. Please check your provided linkproof files.");
 };
 
 async function checkUrl(url: string) {
