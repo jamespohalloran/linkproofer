@@ -1,4 +1,4 @@
-# ![LinkProofer](./assets/logo.png "LinkProofer")
+# ![LinkProofer](./assets/logo.svg "LinkProofer")
 
 LinkProofer is a CLI application for proofing links in your project
 
