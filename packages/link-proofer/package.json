@@ -2,15 +2,19 @@
   "name": "link-proofer",
   "version": "1.0.0",
   "description": "Tool to check for broken links in a project",
-  "type": "module",
-  "source": "src/link-proofer.ts",
+  "source": "src/index.ts",
+  "files": [
+    "dist",
+    "bin/*"
+  ],
   "exports": {
-    "require": "./dist/link-proofer.cjs",
-    "default": "./dist/link-proofer.modern.js"
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
   },
-  "main": "./dist/link-proofer.cjs",
-  "module": "./dist/link-proofer.module.js",
-  "unpkg": "./dist/link-proofer.umd.js",
+  "bin": {
+    "linkproofer": "bin/linkproofer.js"
+  },
+  "main": "./dist/index.modern.js",
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch"
@@ -20,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "esbuild": "0.15.13",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "2.6.1"
   },
   "devDependencies": {
     "microbundle": "^0.15.1",

@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { checkFiles } from "link-proofer";
 import links from "../linkproof";
 export default function Home() {
   return (
@@ -72,7 +71,6 @@ export default function Home() {
 }
 
 export async function getStaticProps() {
-  const ja = await checkFiles();
   return {
     props: {}, // will be passed to the page component as props
   };

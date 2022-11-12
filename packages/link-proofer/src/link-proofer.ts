@@ -1,4 +1,5 @@
-const fs = require("fs");
+import * as fs from "fs";
+//@ts-ignore
 import fetch from "node-fetch";
 import { build } from "esbuild";
 import path from "path";
@@ -11,7 +12,7 @@ const getLinkProofFile = async () => {
   if (fs.existsSync(path.join(process.cwd(), `${linkproofFilename}.ts`))) {
     hasTs = true;
   } else if (
-    fs.existsSync(!path.join(process.cwd(), `${linkproofFilename}.js`))
+    fs.existsSync(!path.join(process.cwd(), `${linkproofFilename}.js`) as any)
   ) {
     throw new Error(
       `No ${linkproofFilename}.ts or linkproof.js file found in project root`
@@ -44,7 +45,6 @@ export const checkFiles = async () => {
 
 const checkLinkProofFile = async (linkProofFile: any) => {
   const verbose = true;
-  console.log("linkProofFile", linkProofFile);
 
   Object.keys(linkProofFile).forEach(async (key) => {
     const isValidUrl = await checkUrl(linkProofFile[key]);
