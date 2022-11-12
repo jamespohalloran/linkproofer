@@ -5,7 +5,12 @@ import { build } from "esbuild";
 import path from "path";
 import fg from "fast-glob";
 
-const getLinkProofFile = async () => {
+interface LinkList {
+  key: string;
+  value: string;
+}
+
+const getLinkProofFile = async (): Promise<LinkList[]> => {
   const linkproofFilename = "linkproof";
   const outputDir = "dist";
 
@@ -35,7 +40,7 @@ const getLinkProofFile = async () => {
     //outfile: path.join(process.cwd(), "dist", `${linkproofFilename}.out.js`),
   });
 
-  let result = {};
+  let result: LinkList[] = [];
   await Promise.all(
     entries.map(async (entry) => {
       //replace entension of entry with .js
@@ -47,7 +52,10 @@ const getLinkProofFile = async () => {
         entryJs
       )).default;
 
-      result = { ...result, ...linkProofFile };
+      const valueKeys = Object.keys(linkProofFile).map((key: any) => {
+        return { key, value: linkProofFile[key] } as LinkList;
+      });
+      result = [...result, ...valueKeys];
     })
   );
 
@@ -59,22 +67,22 @@ export const checkFiles = async () => {
   await checkLinkProofFile(linkproofFile);
 };
 
-const checkLinkProofFile = async (linkProofFile: any) => {
+const checkLinkProofFile = async (linkProofFile: LinkList[]) => {
   const verbose = true;
 
   const checkLinks = async () => {
     let failCount = 0;
 
     await Promise.all(
-      Object.keys(linkProofFile).map(async (key) => {
-        const isValidUrl = await checkUrl(linkProofFile[key]);
+      linkProofFile.map(async (linkItem) => {
+        const isValidUrl = await checkUrl(linkItem.value);
 
         if (!isValidUrl) {
           failCount++;
         }
         if (verbose) {
           console.log(
-            `Checking: ${linkProofFile[key]} - ${isValidUrl ? "OK" : "FAIL"}`
+            `Checking: ${linkItem.key} - ${isValidUrl ? "OK" : "FAIL"}`
           );
         }
       })
