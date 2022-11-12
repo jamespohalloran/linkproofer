@@ -1,6 +1,6 @@
 {
   "name": "linkproofer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tool to check for broken links in a project",
   "source": "src/index.ts",
   "files": [
