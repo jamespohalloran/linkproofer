@@ -4,6 +4,7 @@ import fetch from "node-fetch";
 import { build } from "esbuild";
 import path from "path";
 import fg from "fast-glob";
+import chalk from "chalk";
 
 interface LinkList {
   key: string;
@@ -16,11 +17,37 @@ const getLinkProofFile = async (
   const linkproofFilename = "linkproof";
   const outputDir = "dist";
 
+  const defaultPattern = `**/*.${linkproofFilename}.{ts,js}`;
   //glob for all files ending in .linkproof.ts or linkproof.js outside of dist
   const entries = await fg(
-    filePattern
-      ? filePattern
-      : [`**/*.${linkproofFilename}.{ts,js}`, `!**/${outputDir}/**`]
+    filePattern ? filePattern : [defaultPattern, `!**/${outputDir}/**`]
+  );
+
+  console.log(
+    `Running Linkproofer on ${chalk.bold.blueBright(
+      filePattern || defaultPattern
+    )} `
+  );
+
+  if (entries.length === 0) {
+    console.log(
+      chalk.yellow(
+        `No linkproofer files found matching "${chalk.bold(
+          filePattern || defaultPattern
+        )}".\nPlease create a matching file, or pass in a different file pattern with the --files flag.`
+      )
+    );
+    process.exit(0);
+  }
+
+  console.log(
+    chalk.italic(
+      `Found ${
+        entries.length > 0
+          ? chalk.bold.green(entries.length)
+          : chalk.bold.yellow(entries.length)
+      } linkproof files\n`
+    )
   );
 
   // if (fs.existsSync(path.join(process.cwd(), `${linkproofFilename}.ts`))) {
@@ -65,14 +92,20 @@ const getLinkProofFile = async (
   return result;
 };
 
-export const checkFiles = async (filePattern: string | string[]) => {
+export interface CheckFilesProps {
+  filePattern: string | string[];
+  verbose: boolean;
+}
+
+export const checkFiles = async ({ filePattern, verbose }: CheckFilesProps) => {
   const linkproofFile = await getLinkProofFile(filePattern);
-  await checkLinkProofFile(linkproofFile);
+  await checkLinkProofFile(linkproofFile, verbose);
 };
 
-const checkLinkProofFile = async (linkProofFile: LinkList[]) => {
-  const verbose = true;
-
+const checkLinkProofFile = async (
+  linkProofFile: LinkList[],
+  verbose: boolean
+) => {
   const checkLinks = async () => {
     let failCount = 0;
 
@@ -83,9 +116,11 @@ const checkLinkProofFile = async (linkProofFile: LinkList[]) => {
         if (!isValidUrl) {
           failCount++;
         }
-        if (verbose) {
+        if (verbose || !isValidUrl) {
           console.log(
-            `Checking: ${linkItem.key} - ${isValidUrl ? "OK" : "FAIL"}`
+            `${linkItem.key} (${chalk.italic(chalk.gray(linkItem.value))}) - ${
+              isValidUrl ? chalk.bold.green("OK") : chalk.bold.red("FAIL")
+            }`
           );
         }
       })
@@ -96,14 +131,22 @@ const checkLinkProofFile = async (linkProofFile: LinkList[]) => {
   const failCount = await checkLinks();
 
   if (failCount > 0) {
-    console.error(`${failCount} link${failCount > 1 ? "s" : ""} failed`);
+    console.error(
+      chalk.bold.red(`${failCount} link${failCount > 1 ? "s" : ""} failed`)
+    );
     //TODO - throw error and kill process upstream
     process.exit(0);
   }
 
-  if (linkProofFile.length > 0) console.log("All links passed!");
-  else
-    console.log("No links found. Please check your provided linkproof files.");
+  if (linkProofFile.length > 0) {
+    console.log(chalk.bold.green("All links passed!"));
+  } else {
+    console.log(
+      chalk.bold.yellow(
+        "No links found. Please check your provided linkproof files."
+      )
+    );
+  }
 };
 
 async function checkUrl(url: string) {

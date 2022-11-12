@@ -23,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.2",
     "commander": "^9.4.1",
     "esbuild": "0.15.13",
     "fast-glob": "^3.2.12",
