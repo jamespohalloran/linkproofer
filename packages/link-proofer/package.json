@@ -25,6 +25,7 @@
   "dependencies": {
     "commander": "^9.4.1",
     "esbuild": "0.15.13",
+    "fast-glob": "^3.2.12",
     "node-fetch": "2.6.1"
   },
   "devDependencies": {

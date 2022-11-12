@@ -3,39 +3,55 @@ import * as fs from "fs";
 import fetch from "node-fetch";
 import { build } from "esbuild";
 import path from "path";
+import fg from "fast-glob";
 
 const getLinkProofFile = async () => {
   const linkproofFilename = "linkproof";
+  const outputDir = "dist";
 
-  let hasTs = false;
+  //glob for all files ending in .linkproof.ts or linkproof.js outside of dist
+  const entries = await fg([
+    `**/*.${linkproofFilename}.{ts,js}`,
+    `!**/${outputDir}/**`,
+  ]);
 
-  if (fs.existsSync(path.join(process.cwd(), `${linkproofFilename}.ts`))) {
-    hasTs = true;
-  } else if (
-    fs.existsSync(!path.join(process.cwd(), `${linkproofFilename}.js`) as any)
-  ) {
-    throw new Error(
-      `No ${linkproofFilename}.ts or linkproof.js file found in project root`
-    );
-  }
+  // if (fs.existsSync(path.join(process.cwd(), `${linkproofFilename}.ts`))) {
+  //   hasTs = true;
+  // } else if (
+  //   fs.existsSync(!path.join(process.cwd(), `${linkproofFilename}.js`) as any)
+  // ) {
+  //   throw new Error(
+  //     `No ${linkproofFilename}.ts or linkproof.js file found in project root`
+  //   );
+  // }
 
   await build({
-    entryPoints: [
-      path.join(process.cwd(), `${linkproofFilename}.${hasTs ? "ts" : "js"}`),
-    ],
+    entryPoints: entries,
     bundle: true,
     platform: "node",
     target: "node17",
-    outfile: path.join(process.cwd(), "dist", `${linkproofFilename}.out.js`),
+    outdir: path.join(process.cwd(), "dist"),
+    allowOverwrite: true,
+    //outfile: path.join(process.cwd(), "dist", `${linkproofFilename}.out.js`),
   });
 
-  const linkProofFile = await require(path.join(
-    process.cwd(),
-    "dist",
-    `${linkproofFilename}.out.js`
-  )).default;
+  let result = {};
+  await Promise.all(
+    entries.map(async (entry) => {
+      //replace entension of entry with .js
+      const entryJs = entry.replace(/\.[^/.]+$/, ".js");
 
-  return linkProofFile;
+      const linkProofFile = await require(path.join(
+        process.cwd(),
+        "dist",
+        entryJs
+      )).default;
+
+      result = { ...result, ...linkProofFile };
+    })
+  );
+
+  return result;
 };
 
 export const checkFiles = async () => {
