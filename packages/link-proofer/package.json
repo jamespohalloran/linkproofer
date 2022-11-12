@@ -23,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "commander": "^9.4.1",
     "esbuild": "0.15.13",
     "node-fetch": "2.6.1"
   },
