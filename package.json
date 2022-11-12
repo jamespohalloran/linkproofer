@@ -1,7 +1,7 @@
 {
   "name": "link-proofer-mono",
   "private": "true",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Tool to check for broken links in a project",
   "type": "module",
   "workspaces": [

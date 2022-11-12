@@ -48,9 +48,11 @@ yarn linkproofer
 
 You should see an audit of all your links (just `MY_PORTFOLIO_URL` in our case).
 
+You can create any `*.linkproof.<js | ts>` file in your project, and the containing links will be vilidated anytime linkproofer is run.
+
 ## Linkproofing our custom files
 
-By default, linkproofer will look in any \*_/_.linkproof.<js | ts> file in your project. You can customize this by passing a custom `--files` flag into the CLI
+By default, linkproofer will look in any `\*_/_.linkproof.<js | ts>` file in your project. You can customize this by passing a custom `--files` flag into the CLI
 
 ```bash
 npm run linkproofer --files **/*/mylinksfile.ts
