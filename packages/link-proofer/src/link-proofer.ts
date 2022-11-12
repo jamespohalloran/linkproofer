@@ -46,14 +46,34 @@ export const checkFiles = async () => {
 const checkLinkProofFile = async (linkProofFile: any) => {
   const verbose = true;
 
-  Object.keys(linkProofFile).forEach(async (key) => {
-    const isValidUrl = await checkUrl(linkProofFile[key]);
-    if (verbose) {
-      console.log(
-        `Checking: ${linkProofFile[key]} - ${isValidUrl ? "OK" : "FAIL"}`
-      );
-    }
-  });
+  const checkLinks = async () => {
+    let failCount = 0;
+
+    await Promise.all(
+      Object.keys(linkProofFile).map(async (key) => {
+        const isValidUrl = await checkUrl(linkProofFile[key]);
+
+        if (!isValidUrl) {
+          failCount++;
+        }
+        if (verbose) {
+          console.log(
+            `Checking: ${linkProofFile[key]} - ${isValidUrl ? "OK" : "FAIL"}`
+          );
+        }
+      })
+    );
+    return failCount;
+  };
+
+  const failCount = await checkLinks();
+
+  if (failCount > 0) {
+    console.error(`${failCount} link${failCount > 1 ? "s" : ""} failed`);
+    //TODO - throw error and kill process upstream
+    process.exit(0);
+  }
+  console.log("All links passed!");
 };
 
 async function checkUrl(url: string) {
