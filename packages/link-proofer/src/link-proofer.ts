@@ -76,7 +76,7 @@ const getLinkProofFile = async (
         //join baseUrl and linkProofFile[key] without messing up http:// or https://
 
         const val = linkProofFile[key].startsWith("/")
-          ? baseURL.replace(/\/$/, "") + linkProofFile[key]
+          ? (baseURL || "").replace(/\/$/, "") + linkProofFile[key]
           : linkProofFile[key];
         return {
           key: key,
