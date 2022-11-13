@@ -1,5 +1,5 @@
 {
-  "name": "link-proofer-mono",
+  "name": "linkproofer-mono",
   "private": "true",
   "version": "0.0.1",
   "description": "Tool to check for broken links in a project",
@@ -9,8 +9,8 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "cd packages/link-proofer && yarn build",
-    "dev": "cd packages/link-proofer && yarn dev"
+    "build": "cd packages/linkproofer && yarn build",
+    "dev": "cd packages/linkproofer && yarn dev"
   },
   "keywords": [],
   "author": "",

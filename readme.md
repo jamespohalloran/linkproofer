@@ -148,10 +148,10 @@ You can use one of the following packages to wait for your deployment to finish,
 Usage: linkproofer [options]
 
 Options:
-  -h, --help                   display help for command
   -V, --version                output the version number
   -f, --files <files>          Filepath pattern for files in which linkproofer should check for links
-  -v, --verbose <verbose>      Log out all checked links (not just the failures)
-  -o, --outputDir <outputDir>  Directory to put the compiled output files. (Default "dist"). This         directory should be added to your .gitignore
+  -v, --verbose                Log out all checked links (not just the failures)
+  -o, --outputDir <outputDir>  Directory to put the compiled output files. (Default dist). This directory should be added to your .gitignore
   -b, --baseURL <baseURL>      baseURL to use for relative links.
+  -h, --help                   display help for command
 ```

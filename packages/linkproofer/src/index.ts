@@ -1,4 +1,4 @@
-import { checkFiles } from "./link-proofer";
+import { checkFiles } from "./linkproofer";
 import { Command } from "commander";
 
 export async function init(args: any) {
@@ -7,7 +7,7 @@ export async function init(args: any) {
   program
     .name("linkproofer")
     .description("CLI tool to audit links in your project")
-    .version("1.0.0")
+    .version("0.1.0")
     .option(
       "-f, --files <files>",
       "Filepath pattern for files in which linkproofer should check for links"
