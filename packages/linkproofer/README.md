@@ -1,4 +1,4 @@
-# ![LinkProofer](https://github.com/jamespohalloran/linkproofer/blob/master/assets/logo.svg "LinkProofer")
+# [![LinkProofer](https://github.com/jamespohalloran/linkproofer/blob/master/assets/logo.svg "LinkProofer")](https://github.com/jamespohalloran/linkproofer)
 
 LinkProofer is a CLI application for proofing links in your project
 Store your links in `js` or `ts` files, and verify the links with the LinkProofer CLI script.
