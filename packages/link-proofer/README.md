@@ -1,8 +1,34 @@
-# ![LinkProofer](./assets/logo.svg "LinkProofer")
+# ![LinkProofer](https://github.com/jamespohalloran/linkproofer/blob/master/assets/logo.svg "LinkProofer")
 
 LinkProofer is a CLI application for proofing links in your project
+Store your links in `js` or `ts` files, and verify the links with the linkproofer CLI script.
 
-## Installation
+<p align="center">
+  <img src="https://media.giphy.com/media/pC4IgjB4fxVZFggIPG/giphy.gif" width="597" alt="linkproofer">
+</p>
+
+## ✨ Features
+
+- Out of the box Typescript support.
+- Customizable entry (Provide your own filepath glob, or store links in \*.linkproof.<js | ts> files).
+- Support for absolute or relative links.
+- Run linkproofer checks locally, or in CI.
+- Lightweight! (~50 kB).
+
+## Why use linkproofer?
+
+There are lots of link checkers out there, and many will scrape your site's html.
+
+This can fall short when:
+
+- Your site uses SSR, instead of pre-generating all pages
+- Your site's pages are behind authentication
+- The links on the page are lazy-loaded
+- You want to scrape the site before a PR is merged.
+
+Instead of scraping your site, linkproofer will have you store your links in configured `js` or `ts` files, and check those links via the CLI, or through CI.
+
+## 📦 Installation
 
 ```bash
 yarn install --dev linkproofer
@@ -14,7 +40,7 @@ or
 npm install --save-dev linkproofer
 ```
 
-## Setting up your project
+## 🔧 Setting up your project
 
 Create a `global.linkproof.ts` or `global.linkproof.js` at the root of your project, with the following code:
 
@@ -50,7 +76,7 @@ You should see an audit of all your links (just `MY_PORTFOLIO_URL` in our case).
 
 You can create any `*.linkproof.<js | ts>` file in your project, and the containing links will be vilidated anytime linkproofer is run.
 
-## Linkproofing our custom files
+## ⚙️ Linkproofing our custom files
 
 By default, linkproofer will look in any `\*_/_.linkproof.<js | ts>` file in your project. You can customize this by passing a custom `--files` flag into the CLI
 
@@ -58,7 +84,7 @@ By default, linkproofer will look in any `\*_/_.linkproof.<js | ts>` file in you
 npm run linkproofer --files **/*/mylinksfile.ts
 ```
 
-## Automating LinkProofing
+## 🤖 Automating Checks
 
 Linkproofer can be run in a GitHub action to validate all links are properly working.
 
@@ -88,14 +114,35 @@ jobs:
           yarn install
         env:
           CI: true
-      - name: yarn linkproofer
+      - name: linkproofer
         run: |
           yarn linkproofer
         env:
           CI: true
 ```
 
-## CLI Usage
+## 📁 Using relative paths
+
+If you have deployment previews setup with a service like Netlify or Vercel, you can configure the linkproofer `baseURL` to look for relative links in your deployment preview
+
+Your GitHub action step will look something like:
+
+```yml
+- name: linkproofer
+  run: |
+    yarn linkproofer --baseURL https://portfolio-avatar-git-${{ github.head_ref }}-jamespohalloran.vercel.app
+  env:
+    CI: true
+```
+
+In the above example, `https://portfolio-avatar-git` and `-jamespohalloran.vercel.app` will need to be replaced with your Vercel/Netlify project's specific info.
+
+You can use one of the following packages to wait for your deployment to finish, before checking relative links:
+
+- https://github.com/marketplace/actions/wait-for-netlify
+- https://github.com/marketplace/actions/await-for-vercel-deployment
+
+## 📖 CLI Usage
 
 ```
 Usage: linkproofer [options]
@@ -108,7 +155,3 @@ Options:
   -o, --outputDir <outputDir>  Directory to put the compiled output files. (Default dist). This         directory should be added to your .gitignore
   -b, --baseURL <baseURL>      baseURL to use for relative links.
 ```
-
-## Checking links on local deployment
-
-TODO

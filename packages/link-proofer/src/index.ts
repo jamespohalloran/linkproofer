@@ -13,7 +13,7 @@ export async function init(args: any) {
       "Filepath pattern for files in which linkproofer should check for links"
     )
     .option(
-      "-v, --verbose <verbose>",
+      "-v, --verbose",
       "Log out all checked links (not just the failures)"
     )
     .option(

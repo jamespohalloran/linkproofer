@@ -1,4 +1,4 @@
 const linkproof = {
-  NEXTJS_HOME2: "https://nextjs.org",
+  PAYMENTS_URL: "https://ko-fi.com/johalloran",
 };
 export default linkproof;
