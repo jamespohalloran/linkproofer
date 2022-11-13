@@ -65,12 +65,12 @@ Linkproofer can be run in a GitHub action to validate all links are properly wor
 Add the following action: `.github/workflows/linkproof.yml`
 
 ```yml
-name: Node CI
+name: Check Links
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  build:
+  linkproofer:
     runs-on: ubuntu-latest
 
     strategy:
