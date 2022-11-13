@@ -37,7 +37,7 @@ const getLinkProofFile = async (
         )}".\nPlease create a matching file, or pass in a different file pattern with the --files flag.`
       )
     );
-    process.exit(0);
+    process.exit(1);
   }
 
   console.log(
@@ -135,7 +135,7 @@ const checkLinkProofFile = async (
       chalk.bold.red(`${failCount} link${failCount > 1 ? "s" : ""} failed`)
     );
     //TODO - throw error and kill process upstream
-    process.exit(0);
+    process.exit(1);
   }
 
   if (linkProofFile.length > 0) {
