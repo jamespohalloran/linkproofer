@@ -17,9 +17,7 @@ Store your links in `js` or `ts` files, and verify the links with the linkproofe
 
 ## Why use linkproofer?
 
-There are lots of link checkers out there, and many will scrape your site's html.
-
-This can fall short when:
+There are lots of link checkers out there, and many will scrape your site's html. HTML scraping solutions can fall short when...
 
 - Your site uses SSR, instead of pre-generating all pages
 - Your site's pages are behind authentication
@@ -74,7 +72,7 @@ yarn linkproofer
 
 You should see an audit of all your links (just `MY_PORTFOLIO_URL` in our case).
 
-You can create any `*.linkproof.<js | ts>` file in your project, and the containing links will be vilidated anytime linkproofer is run.
+You can create any `*.linkproof.<js | ts>` file in your project, and the containing links will be validated anytime linkproofer is run.
 
 ## ⚙️ Linkproofing our custom files
 

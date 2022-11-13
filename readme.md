@@ -1,7 +1,7 @@
 # ![LinkProofer](https://github.com/jamespohalloran/linkproofer/blob/master/assets/logo.svg "LinkProofer")
 
 LinkProofer is a CLI application for proofing links in your project
-Store your links in `js` or `ts` files, and verify the links with the linkproofer CLI script.
+Store your links in `js` or `ts` files, and verify the links with the LinkProofer CLI script.
 
 <p align="center">
   <img src="https://media.giphy.com/media/pC4IgjB4fxVZFggIPG/giphy.gif" width="597" alt="linkproofer">
@@ -12,21 +12,19 @@ Store your links in `js` or `ts` files, and verify the links with the linkproofe
 - Out of the box Typescript support.
 - Customizable entry (Provide your own filepath glob, or store links in \*.linkproof.<js | ts> files).
 - Support for absolute or relative links.
-- Run linkproofer checks locally, or in CI.
+- Run LinkProofer checks locally, or in CI.
 - Lightweight! (~50 kB).
 
 ## Why use linkproofer?
 
-There are lots of link checkers out there, and many will scrape your site's html.
-
-This can fall short when:
+There are lots of link checkers out there, and many will scrape your site's html. HTML scraping solutions can fall short when...
 
 - Your site uses SSR, instead of pre-generating all pages
 - Your site's pages are behind authentication
 - The links on the page are lazy-loaded
 - You want to scrape the site before a PR is merged.
 
-Instead of scraping your site, linkproofer will have you store your links in configured `js` or `ts` files, and check those links via the CLI, or through CI.
+Instead of scraping your site, LinkProofer will have you store your links in configured `js` or `ts` files, and check those links via the CLI, or through CI.
 
 ## 📦 Installation
 
@@ -51,7 +49,9 @@ const linkproof = {
 export default linkproof;
 ```
 
-You can even use this URL in one of your pages if you want, to get an idea how linkproofer is used:
+> Note ⚠️. The link object needs to be the default export for LinkProofer to work.
+
+You can even use this URL in one of your pages if you want, to get an idea how LinkProofer is used:
 
 ```jsx
 // ...
@@ -74,11 +74,11 @@ yarn linkproofer
 
 You should see an audit of all your links (just `MY_PORTFOLIO_URL` in our case).
 
-You can create any `*.linkproof.<js | ts>` file in your project, and the containing links will be vilidated anytime linkproofer is run.
+You can create any `*.linkproof.<js | ts>` file in your project, and the containing links will be validated anytime LinkProofer is run.
 
 ## ⚙️ Linkproofing our custom files
 
-By default, linkproofer will look in any `\*_/_.linkproof.<js | ts>` file in your project. You can customize this by passing a custom `--files` flag into the CLI
+By default, LinkProofer will look in any `\*_/_.linkproof.<js | ts>` file in your project. You can customize this by passing a custom `--files` flag into the CLI
 
 ```bash
 npm run linkproofer --files **/*/mylinksfile.ts
@@ -123,7 +123,7 @@ jobs:
 
 ## 📁 Using relative paths
 
-If you have deployment previews setup with a service like Netlify or Vercel, you can configure the linkproofer `baseURL` to look for relative links in your deployment preview
+If you have deployment previews setup with a service like Netlify or Vercel, you can configure the LinkProofer `baseURL` to look for relative links in your deployment preview
 
 Your GitHub action step will look something like:
 
@@ -152,6 +152,6 @@ Options:
   -V, --version                output the version number
   -f, --files <files>          Filepath pattern for files in which linkproofer should check for links
   -v, --verbose <verbose>      Log out all checked links (not just the failures)
-  -o, --outputDir <outputDir>  Directory to put the compiled output files. (Default dist). This         directory should be added to your .gitignore
+  -o, --outputDir <outputDir>  Directory to put the compiled output files. (Default "dist"). This         directory should be added to your .gitignore
   -b, --baseURL <baseURL>      baseURL to use for relative links.
 ```
