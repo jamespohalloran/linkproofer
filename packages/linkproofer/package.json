@@ -1,7 +1,8 @@
 {
   "name": "linkproofer",
-  "version": "0.1.1",
-  "description": "Tool to check for broken links in a project",
+  "author": "James O'Halloran (https://johalloran.dev)",
+  "version": "0.1.2",
+  "description": "LinkProofer is a CLI application for proofing links in your project.",
   "source": "src/index.ts",
   "files": [
     "dist",
@@ -19,9 +20,13 @@
     "build": "microbundle",
     "dev": "microbundle watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "link check",
+    "typescript",
+    "node",
+    "jamstack"
+  ],
+  "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^9.4.1",
@@ -32,5 +37,12 @@
   "devDependencies": {
     "microbundle": "^0.15.1",
     "typescript": "^4.8.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "url": "https://github.com/jamespohalloran/linkproofer.git",
+    "directory": "packages/linkproofer"
   }
 }

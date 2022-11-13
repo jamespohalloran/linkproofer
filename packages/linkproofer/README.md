@@ -1,6 +1,6 @@
 # [![LinkProofer](https://github.com/jamespohalloran/linkproofer/blob/master/assets/logo.svg "LinkProofer")](https://github.com/jamespohalloran/linkproofer)
 
-LinkProofer is a CLI application for proofing links in your project
+LinkProofer is a CLI application for proofing links in your project.
 Store your links in `js` or `ts` files, and verify the links with the LinkProofer CLI script.
 
 <p align="center">
@@ -9,13 +9,13 @@ Store your links in `js` or `ts` files, and verify the links with the LinkProofe
 
 ## ✨ Features
 
-- Out of the box Typescript support.
+- Out-of-the-box Typescript support.
 - Customizable entry (Provide your own filepath glob, or store links in \*.linkproof.<js | ts> files).
 - Support for absolute or relative links.
 - Run LinkProofer checks locally, or in CI.
 - Lightweight! (~50 kB).
 
-## Why use linkproofer?
+## Why use LinkProofer?
 
 There are lots of link checkers out there, and many will scrape your site's html. HTML scraping solutions can fall short when...
 

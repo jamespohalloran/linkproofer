@@ -1,19 +1,24 @@
 {
   "name": "linkproofer-mono",
   "private": "true",
+  "author": "James O'Halloran (https://johalloran.dev)",
   "version": "0.0.1",
-  "description": "Tool to check for broken links in a project",
+  "description": "LinkProofer is a CLI application for proofing links in your project.",
   "type": "module",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
+  "keywords": [
+    "link check",
+    "typescript",
+    "node",
+    "jamstack"
+  ],
   "scripts": {
     "build": "cd packages/linkproofer && yarn build",
     "dev": "cd packages/linkproofer && yarn dev"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {}
 }
