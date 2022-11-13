@@ -12,10 +12,11 @@ interface LinkList {
 }
 
 const getLinkProofFile = async (
-  filePattern: string | string[]
+  filePattern: string | string[],
+  outputDir: string,
+  baseURL: string
 ): Promise<LinkList[]> => {
   const linkproofFilename = "linkproof";
-  const outputDir = "dist";
 
   const defaultPattern = `**/*.${linkproofFilename}.{ts,js}`;
   //glob for all files ending in .linkproof.ts or linkproof.js outside of dist
@@ -50,24 +51,13 @@ const getLinkProofFile = async (
     )
   );
 
-  // if (fs.existsSync(path.join(process.cwd(), `${linkproofFilename}.ts`))) {
-  //   hasTs = true;
-  // } else if (
-  //   fs.existsSync(!path.join(process.cwd(), `${linkproofFilename}.js`) as any)
-  // ) {
-  //   throw new Error(
-  //     `No ${linkproofFilename}.ts or linkproof.js file found in project root`
-  //   );
-  // }
-
   await build({
     entryPoints: entries,
     bundle: true,
     platform: "node",
     target: "node17",
-    outdir: path.join(process.cwd(), "dist"),
+    outdir: path.join(process.cwd(), outputDir),
     allowOverwrite: true,
-    //outfile: path.join(process.cwd(), "dist", `${linkproofFilename}.out.js`),
   });
 
   let result: LinkList[] = [];
@@ -78,12 +68,20 @@ const getLinkProofFile = async (
 
       const linkProofFile = await require(path.join(
         process.cwd(),
-        "dist",
+        outputDir,
         entryJs
       )).default;
 
       const valueKeys = Object.keys(linkProofFile).map((key: any) => {
-        return { key, value: linkProofFile[key] } as LinkList;
+        //join baseUrl and linkProofFile[key] without messing up http:// or https://
+
+        const val = linkProofFile[key].startsWith("/")
+          ? baseURL.replace(/\/$/, "") + linkProofFile[key]
+          : linkProofFile[key];
+        return {
+          key: key,
+          value: val,
+        } as LinkList;
       });
       result = [...result, ...valueKeys];
     })
@@ -95,10 +93,17 @@ const getLinkProofFile = async (
 export interface CheckFilesProps {
   filePattern: string | string[];
   verbose: boolean;
+  outputDir: string;
+  baseURL: string;
 }
 
-export const checkFiles = async ({ filePattern, verbose }: CheckFilesProps) => {
-  const linkproofFile = await getLinkProofFile(filePattern);
+export const checkFiles = async ({
+  filePattern,
+  verbose,
+  outputDir = "dist",
+  baseURL,
+}: CheckFilesProps) => {
+  const linkproofFile = await getLinkProofFile(filePattern, outputDir, baseURL);
   await checkLinkProofFile(linkproofFile, verbose);
 };
 

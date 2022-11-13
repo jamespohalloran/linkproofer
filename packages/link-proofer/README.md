@@ -95,6 +95,20 @@ jobs:
           CI: true
 ```
 
+## CLI Usage
+
+```
+Usage: linkproofer [options]
+
+Options:
+  -h, --help                   display help for command
+  -V, --version                output the version number
+  -f, --files <files>          Filepath pattern for files in which linkproofer should check for links
+  -v, --verbose <verbose>      Log out all checked links (not just the failures)
+  -o, --outputDir <outputDir>  Directory to put the compiled output files. (Default dist). This         directory should be added to your .gitignore
+  -b, --baseURL <baseURL>      baseURL to use for relative links.
+```
+
 ## Checking links on local deployment
 
 TODO

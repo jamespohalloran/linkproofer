@@ -16,10 +16,17 @@ export async function init(args: any) {
       "-v, --verbose <verbose>",
       "Log out all checked links (not just the failures)"
     )
+    .option(
+      "-o, --outputDir <outputDir>",
+      "Directory to put the compiled output files. (Default dist). This directory should be added to your .gitignore"
+    )
+    .option("-b, --baseURL <baseURL>", "baseURL to use for relative links.")
     .action(async (options) => {
       await checkFiles({
         filePattern: options.files,
         verbose: options.verbose,
+        outputDir: options.outputDir,
+        baseURL: options.baseURL,
       });
     });
 
